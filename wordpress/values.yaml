@@ -1,0 +1,21 @@
+replicaCount: 1
+
+mysql:
+  deployment:
+    name: wordpress-mysql
+    port: 3306
+    labels:
+      app: wordpress
+      tier: mysql
+    spec:
+      image: mysql:5.6
+      env:
+        name: MYSQL_ROOT_PASSWORD
+        secretKeyRef:
+          name: mysql-pass-bc6ggk5g2t 
+          key: password
+      volumes:
+        name: mysql-persistent-storage
+        mountPath: /var/lib/mysql
+        claimName: mysql-pv-claim
+
