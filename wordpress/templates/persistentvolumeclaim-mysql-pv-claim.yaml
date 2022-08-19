@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.mysql.pvc.name }}
   labels:
-    app: {{ .Values.mysql.labels.app }}
+    app: {{ .Values.app }}
 spec:
   accessModes:
     - ReadWriteOnce

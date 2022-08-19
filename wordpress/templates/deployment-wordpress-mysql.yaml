@@ -3,23 +3,23 @@ kind: Deployment
 metadata:
   name: {{ .Values.mysql.name }}
   labels:
-    app: {{ .Values.mysql.labels.app }}
+    app: {{ .Values.app }}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.mysql.labels.app }}
-      tier: {{ .Values.mysql.labels.tier }}
+      app: {{ .Values.app }}
+      tier: {{ .Values.mysql.tier }}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: {{ .Values.mysql.labels.app }}
-        tier: {{ .Values.mysql.labels.tier }}
+        app: {{ .Values.app }}
+        tier: {{ .Values.mysql.tier }}
     spec:
       containers:
       - image: {{ .Values.mysql.deployment.image }}
-        name: {{ .Values.mysql.labels.tier }}
+        name: {{ .Values.mysql.tier }}
         env:
         - name: {{ .Values.mysql.env.name }}
           valueFrom:
@@ -28,11 +28,11 @@ spec:
               key: {{ .Values.mysql.env.key }}
         ports:
         - containerPort: {{ .Values.mysql.port }}
-          name: {{ .Values.mysql.labels.tier }}
+          name: {{ .Values.mysql.tier }}
         volumeMounts:
         - name: {{ .Values.mysql.deployment.volumes.name }}
           mountPath: {{ .Values.mysql.deployment.volumes.mountPath }}
       volumes:
       - name: {{ .Values.mysql.deployment.volumes.name }}
         persistentVolumeClaim:
-          claimName: {{ .Values.mysql.deployment.volumes.claimName }}
+          claimName: {{ .Values.mysql.pvc.name }}

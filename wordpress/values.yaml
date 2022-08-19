@@ -1,11 +1,10 @@
 replicaCount: 1
 
+app: wordpress
 mysql:
   name: wordpress-mysql
   port: 3306
-  labels:
-      app: wordpress
-      tier: mysql
+  tier: mysql 
   env:
     name: MYSQL_ROOT_PASSWORD
     secretKey: mysql-pass-bc6ggk5g2t 
@@ -15,11 +14,24 @@ mysql:
     volumes:
       name: mysql-persistent-storage
       mountPath: /var/lib/mysql
-      claimName: mysql-pv-claim
   pvc:
     name: mysql-pv-claim
     storage: 20Gi
 wordpress:
-  
+  port: 80
+  tier: frontend
+  env:
+    name: WORDPRESS_DB_HOST
+    value: wordpress-mysql
+    passName: WORDPRESS_DB_PASSWORD
+  deployment:
+    image: wordpress:4.8-apache
+    volumes:
+      name: wordpress-persistent-storage
+      mountPath: /var/www/html
+  pvc:
+    name: wp-pv-claim
+    storage: 20Gi
+
 
 

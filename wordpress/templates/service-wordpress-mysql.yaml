@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: {{ .Values.mysql.name }}
   labels:
-    app: {{ .Values.mysql.labels.app }}
+    app: {{ .Values.app }}
 spec:
   ports:
     - port: {{ .Values.mysql.port }}
   selector:
-    app: {{ .Values.mysql.labels.app }}
-    tier: {{ .Values.mysql.labels.tier }}
+    app: {{ .Values.app }}
+    tier: {{ .Values.mysql.tier }}
   clusterIP: None
 

@@ -1,41 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress
+  name: {{ .Values.app }}
   labels:
-    app: wordpress
+    app: {{ .Values.app }}
 spec:
   selector:
     matchLabels:
-      app: wordpress
-      tier: frontend
+      app: {{ .Values.app }}
+      tier: {{ .Values.wordpress.tier }}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: wordpress
-        tier: frontend
+        app: {{ .Values.app }}
+        tier: {{ .Values.wordpress.tier }}
     spec:
       containers:
-      - image: wordpress:4.8-apache
-        name: wordpress
+      - image: {{ .Values.wordpress.deployment.image }}
+        name: {{ .Values.app }}
         env:
-        - name: WORDPRESS_DB_HOST
-          value: wordpress-mysql
-        - name: WORDPRESS_DB_PASSWORD
+        - name: {{ .Values.wordpress.env.name }}
+          value: {{ .Values.wordpress.env.value }}
+        - name: {{ .Values.wordpress.env.passName }}
           valueFrom:
             secretKeyRef:
-              name: mysql-pass-bc6ggk5g2t
-              key: password
+              name: {{ .Values.mysql.env.secretKey }}
+              key: {{ .Values.mysql.env.key }}
         ports:
-        - containerPort: 80
-          name: wordpress
+        - containerPort: {{ .Values.wordpress.port }}
+          name: {{ .Values.app }}
         volumeMounts:
-        - name: wordpress-persistent-storage
-          mountPath: /var/www/html
+        - name: {{ .Values.wordpress.deployment.volumes.name }}
+          mountPath: {{ .Values.wordpress.deployment.volumes.mountPath }}
       volumes:
-      - name: wordpress-persistent-storage
+      - name: {{ .Values.wordpress.deployment.volumes.name }}
         persistentVolumeClaim:
-          claimName: wp-pv-claim
+          claimName: {{ .Values.wordpress.pvc.name }}
 
