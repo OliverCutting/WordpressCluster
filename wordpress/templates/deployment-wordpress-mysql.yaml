@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.mysql.deployment.name }}
+  name: {{ .Values.mysql.name }}
   labels:
-    app: {{ .Values.mysql.deployment.labels.app }}
+    app: {{ .Values.mysql.labels.app }}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.mysql.deployment.labels.app }}
-      tier: {{ .Values.mysql.deployment.labels.tier }}
+      app: {{ .Values.mysql.labels.app }}
+      tier: {{ .Values.mysql.labels.tier }}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: {{ .Values.mysql.deployment.labels.app }}
-        tier: {{ .Values.mysql.deployment.labels.tier }}
+        app: {{ .Values.mysql.labels.app }}
+        tier: {{ .Values.mysql.labels.tier }}
     spec:
       containers:
-      - image: {{ .Values.mysql.deployment.spec.image }}
-        name: {{ .Values.mysql.deployment.labels.tier }}
+      - image: {{ .Values.mysql.deployment.image }}
+        name: {{ .Values.mysql.labels.tier }}
         env:
-        - name: {{ .Values.mysql.deployment.spec.env.name }}
+        - name: {{ .Values.mysql.env.name }}
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.mysql.deployment.spec.env.secretKeyRef.name }} 
-              key: {{ .Values.mysql.deployment.spec.env.secretKeyRef.key }}
+              name: {{ .Values.mysql.env.secretKey }} 
+              key: {{ .Values.mysql.env.key }}
         ports:
-        - containerPort: {{ .Values.mysql.deployment.port }}
-          name: {{ .Values.mysql.deployment.labels.tier }}
+        - containerPort: {{ .Values.mysql.port }}
+          name: {{ .Values.mysql.labels.tier }}
         volumeMounts:
-        - name: {{ .Values.mysql.deployment.spec.volumes.name }}
-          mountPath: {{ .Values.mysql.deployment.spec.volumes.mountPath }}
+        - name: {{ .Values.mysql.deployment.volumes.name }}
+          mountPath: {{ .Values.mysql.deployment.volumes.mountPath }}
       volumes:
-      - name: {{ .Values.mysql.deployment.spec.volumes.name }}
+      - name: {{ .Values.mysql.deployment.volumes.name }}
         persistentVolumeClaim:
-          claimName: {{ .Values.mysql.deployment.spec.volumes.claimName }}
+          claimName: {{ .Values.mysql.deployment.volumes.claimName }}

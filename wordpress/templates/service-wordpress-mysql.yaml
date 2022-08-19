@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress-mysql
+  name: {{ .Values.mysql.name }}
   labels:
-    app: wordpress
+    app: {{ .Values.mysql.labels.app }}
 spec:
   ports:
-    - port: 3306
+    - port: {{ .Values.mysql.port }}
   selector:
-    app: wordpress
-    tier: mysql
+    app: {{ .Values.mysql.labels.app }}
+    tier: {{ .Values.mysql.labels.tier }}
   clusterIP: None
 
