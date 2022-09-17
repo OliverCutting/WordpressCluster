@@ -9,15 +9,25 @@ jobs:
     container: ghcr.io/olivercutting/wordpresscluster:main
     continue-on-error: true
     steps:
-        - uses: actions/checkout@v1
-        - run: |
-            yamllint .
+    - uses: actions/checkout@v1
+    - run: |
+        yamllint .
 
-  helmlint:
+  helm-lint:
     runs-on: ubuntu-latest
     container: ghcr.io/olivercutting/wordpresscluster:main
     continue-on-error: true
     steps:
-        - uses: actions/checkout@v1
-        - run: |
-            helm lint wordpress
+    - uses: actions/checkout@v1
+    - run: |
+        helm lint wordpress
+  
+  kics:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+    - uses: actions/checkout@v1
+    - name: KICS Github Action
+      uses: Checkmarx/kics-github-action@v1.5
+      with:
+        path: .
