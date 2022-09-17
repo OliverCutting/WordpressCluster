@@ -1,4 +1,5 @@
+---
 secretGenerator:
-- name: mysql-pass
-  literals:
-  - password=password
+  - name: mysql-pass
+    literals:
+    - password=password
