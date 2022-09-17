@@ -1,0 +1,16 @@
+name: Test files
+
+on: [push]
+
+jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    container: ghcr.io/olivercutting/wordpresscluster:main
+    continue-on-error: true
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v1
+
+      - name: Run yamllint
+        run: | 
+          yamllint .
