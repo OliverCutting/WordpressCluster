@@ -1,38 +1,39 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.mysql.name }}
+  name: {{.Values.mysql.name}}
   labels:
-    app: {{ .Values.app }}
+    app: {{.Values.app}}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.app }}
-      tier: {{ .Values.mysql.tier }}
+      app: {{.Values.app}}
+      tier: {{.Values.mysql.tier}}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: {{ .Values.app }}
-        tier: {{ .Values.mysql.tier }}
+        app: {{.Values.app}}
+        tier: {{.Values.mysql.tier}}
     spec:
       containers:
-      - image: {{ .Values.mysql.deployment.image }}
-        name: {{ .Values.mysql.tier }}
+      - image: {{.Values.mysql.deployment.image}}
+        name: {{.Values.mysql.tier}}
         env:
-        - name: {{ .Values.mysql.env.name }}
+        - name: {{.Values.mysql.env.name}}
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.mysql.env.secretKey }} 
-              key: {{ .Values.mysql.env.key }}
+              name: {{.Values.mysql.env.secretKey}} 
+              key: {{.Values.mysql.env.key}}
         ports:
-        - containerPort: {{ .Values.mysql.port }}
-          name: {{ .Values.mysql.tier }}
+        - containerPort: {{.Values.mysql.port}}
+          name: {{.Values.mysql.tier}}
         volumeMounts:
-        - name: {{ .Values.mysql.deployment.volumes.name }}
-          mountPath: {{ .Values.mysql.deployment.volumes.mountPath }}
+        - name: {{.Values.mysql.deployment.volumes.name }}
+          mountPath: {{.Values.mysql.deployment.volumes.mountPath}}
       volumes:
-      - name: {{ .Values.mysql.deployment.volumes.name }}
+      - name: {{.Values.mysql.deployment.volumes.name}}
         persistentVolumeClaim:
-          claimName: {{ .Values.mysql.pvc.name }}
+          claimName: {{.Values.mysql.pvc.name}}

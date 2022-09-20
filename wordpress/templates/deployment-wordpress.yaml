@@ -1,41 +1,42 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.app }}
+  name: {{.Values.app }}
   labels:
-    app: {{ .Values.app }}
+    app: {{.Values.app}}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.app }}
-      tier: {{ .Values.wordpress.tier }}
+      app: {{.Values.app}}
+      tier: {{.Values.wordpress.tier}}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: {{ .Values.app }}
-        tier: {{ .Values.wordpress.tier }}
+        app: {{.Values.app}}
+        tier: {{.Values.wordpress.tier}}
     spec:
       containers:
-      - image: {{ .Values.wordpress.deployment.image }}
-        name: {{ .Values.app }}
+      - image: {{.Values.wordpress.deployment.image}}
+        name: {{.Values.app}}
         env:
-        - name: {{ .Values.wordpress.env.name }}
-          value: {{ .Values.wordpress.env.value }}
-        - name: {{ .Values.wordpress.env.passName }}
+        - name: {{.Values.wordpress.env.name}}
+          value: {{.Values.wordpress.env.value}}
+        - name: {{.Values.wordpress.env.passName}}
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.mysql.env.secretKey }}
-              key: {{ .Values.mysql.env.key }}
+              name: {{.Values.mysql.env.secretKey}}
+              key: {{.Values.mysql.env.key}}
         ports:
-        - containerPort: {{ .Values.wordpress.port }}
-          name: {{ .Values.app }}
+        - containerPort: {{.Values.wordpress.port}}
+          name: {{.Values.app}}
         volumeMounts:
-        - name: {{ .Values.wordpress.deployment.volumes.name }}
-          mountPath: {{ .Values.wordpress.deployment.volumes.mountPath }}
+        - name: {{.Values.wordpress.deployment.volumes.name}}
+          mountPath: {{.Values.wordpress.deployment.volumes.mountPath}}
       volumes:
-      - name: {{ .Values.wordpress.deployment.volumes.name }}
+      - name: {{.Values.wordpress.deployment.volumes.name}}
         persistentVolumeClaim:
-          claimName: {{ .Values.wordpress.pvc.name }}
+          claimName: {{.Values.wordpress.pvc.name}}
 

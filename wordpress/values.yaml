@@ -1,3 +1,4 @@
+---
 replicaCount: 1
 
 app: wordpress
@@ -32,4 +33,3 @@ wordpress:
   pvc:
     name: wp-pv-claim
     storage: 20Gi
-    

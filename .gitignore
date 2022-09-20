@@ -1,2 +1,4 @@
 *.tgz
 *.locks
+.ash_history
+Chart.lock
