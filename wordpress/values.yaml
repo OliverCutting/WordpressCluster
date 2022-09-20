@@ -33,3 +33,8 @@ wordpress:
   pvc:
     name: wp-pv-claim
     storage: 20Gi
+
+kube-prometheus-stack:
+  prometheus-node-exporter:
+    hostRootFsMount: 
+      enabled:  false
