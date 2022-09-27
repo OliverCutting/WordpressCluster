@@ -38,3 +38,14 @@ kube-prometheus-stack:
   prometheus-node-exporter:
     hostRootFsMount: 
       enabled:  false
+
+prometheus-mysql-exporter:
+  mysql:
+    user: root
+    pass: password
+    host: localhost
+    port: 3306
+  serviceMonitor:
+    enabled: enabled
+  serviceAccount:
+    create: true

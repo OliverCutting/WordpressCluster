@@ -10,5 +10,7 @@ dependencies:
   - name: kube-prometheus-stack
     version: "39"
     repository: "https://prometheus-community.github.io/helm-charts"
-# requires following update to work
-# kubectl patch ds test-prometheus-node-exporter --type "json" -p '[{"op": "remove", "path" : "/spec/template/spec/containers/0/volumeMounts/2/mountPropagation"}]'
+
+  - name: prometheus-mysql-exporter
+    version:  "1.9 "
+    repository: "https://prometheus-community.github.io/helm-charts"
